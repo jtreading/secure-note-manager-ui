@@ -1,13 +1,17 @@
-FROM node:20.1.0
-
-WORKDIR /app
-
-COPY package.json .
+FROM node:latest AS ui-builder
+WORKDIR /app/ui
+COPY ./package*.json ./
+COPY . .
 
 RUN npm install
 
-COPY . .
+FROM node:latest
+WORKDIR /app
+COPY --from=ui-builder /app/ui /app/ui
+COPY ./start.sh .
+
+RUN chmod +x ./start.sh
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["./start.sh"]
