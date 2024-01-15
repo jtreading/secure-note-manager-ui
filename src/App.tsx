@@ -8,6 +8,7 @@ type Note = {
 };
 
 const App = () => {
+  const API_URL = process.env.API_URL || "http://localhost:5000";
   const [notes, setNotes] = useState<Note[]>([]);
 
   const [title, setTitle] = useState("");
@@ -20,7 +21,7 @@ const App = () => {
     const fetchNotes = async () => {
       try {
         const response = await fetch(
-          process.env.API_URL || "http://localhost:5000/api/notes"
+          `${API_URL}/api/notes`
         );
 
         const notes: Note[] =
@@ -47,7 +48,7 @@ const App = () => {
     event.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:5000/api/notes",
+        `${API_URL}/api/notes`,
         {
           method: "POST",
           headers: {
@@ -81,7 +82,7 @@ const App = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/notes/${selectedNote.id}`,
+        `${API_URL}/api/notes/${selectedNote.id}`,
         {
           method: "PUT",
           headers: {
@@ -125,7 +126,7 @@ const App = () => {
 
     try {
       await fetch(
-        `http://localhost:5000/api/notes/${noteId}`,
+        `${API_URL}/api/notes/${noteId}`,
         {
           method: "DELETE",
         }
