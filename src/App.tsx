@@ -20,7 +20,7 @@ const App = () => {
     const fetchNotes = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/notes"
+          process.env.API_URL || "http://localhost:5000/api/notes"
         );
 
         const notes: Note[] =
